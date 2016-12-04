@@ -1,0 +1,49 @@
+clc
+
+A = pref;
+%positions=quant';
+% positions = 500*ones(1,16);
+N=size(pref,1);
+B=A; % Dynamic preference matrix
+M=zeros(N+2,size(positions,2));
+M(1,:)=1:1:size(positions,2);
+M(2,:)=positions';
+M(3:N+2,:)=ones(N,size(positions,2))*10000;
+losers =zeros(N,size(positions,2));
+
+for i=1:N
+       M(i+2,A(i,1))=i;
+       B(i,1)=10000;
+       i=i+1;
+end
+k=2;
+for k=2:N
+i=1;
+    
+    i=1;
+        for j=1:size(positions)
+            if sum(M(3:N+2,j)~=10000)>positions(j)
+                M(3:N+2,j)=sort(M(3:N+2,j));
+                losers(:,j) = vertcat(10000*ones(positions(j),1),M(positions(j)+2:N+1,j));
+                M(3:N+2,j)=vertcat(M(3:positions(j)+2,j),10000*ones(N-positions(j),1));
+                j=j+1;
+            else
+                j=j+1;
+            end
+        end
+       for i=1:N
+           if sum(sum(losers==i))== 0
+                i=i+1;
+           else 
+               for x=1:size(positions);
+                if B(i,x)==0;
+                    x=x+1;
+                else
+                l=sum(M(3:N+2,A(i,x))==10000)
+                M(N+2-l+1,A(i,x))=i
+                i=i+1;
+            end
+        end
+end
+    
+    

@@ -1,0 +1,16 @@
+% Single Category Serial Dictatorship Matching Mechanism
+i=1;
+for i=1:5;  % All N cadets
+    
+    while j<=16;  %All preferences
+        temp=sum(M(:,2)==P2(i,j));
+        if temp < Q(j,1);  % If the branch has not already been fully allocated then match
+        M(i,2)=P2(i,j);
+        else
+            j=j+1;  %, otherwise try next most preferred branch
+        end;
+        end;
+end;
+
+
+    
